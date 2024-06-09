@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Book{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-image: url('https://cdn.pixabay.com/photo/2017/05/12/05/58/book-2306181_640.jpg'); /* Replace with your image URL */
+        background-size: cover;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        background: rgba(255, 255, 255, 0.9); /* Slightly more opaque background */
+        border-radius: 15px;
+        padding: 30px;
+        max-width: 800px;
+        margin: 50px auto;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    .card-title {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .col-form-label {
+        font-weight: bold;
+        color: #444;
+        font-size: 16px;
+    }
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        padding: 12px;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+    }
+    .btn-primary {
+        background-color: green;
+        border-color: #007bff;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-size: 18px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+    .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+        border-radius: 8px;
+        padding: 12px 24px;
+        font-size: 18px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+    .btn-secondary:hover {
+        background-color: #565e64;
+        transform: translateY(-2px);
+    }
+    .btn {
+        display: inline-block;
+        margin-top: 20px;
+        margin-right: 10px;
+    }
+    .hint-text {
+        font-size: 14px;
+        color: #888;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Add a New Book</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <label for="{{ form.title.id_for_label }}" class="col-sm-2 col-form-label">Title:</label>
+                    <div class="col-sm-10">
+                        {{ form.title }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.author_name.id_for_label }}" class="col-sm-2 col-form-label">Author Name:</label>
+                    <div class="col-sm-10">
+                        {{ form.author_name }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.publication_date.id_for_label }}" class="col-sm-2 col-form-label">Publication Date:</label>
+                    <div class="col-sm-10">
+                        {{ form.publication_date }}
+                        <small class="hint-text">Format: year-month-day</small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.genre.id_for_label }}" class="col-sm-2 col-form-label">Genre:</label>
+                    <div class="col-sm-10">
+                        {{ form.genre }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.pdf.id_for_label }}" class="col-sm-2 col-form-label">PDF:</label>
+                    <div class="col-sm-10">
+                        {{ form.pdf }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.image.id_for_label }}" class="col-sm-2 col-form-label">Image:</label>
+                    <div class="col-sm-10">
+                        {{ form.image }}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="{{ form.pages.id_for_label }}" class="col-sm-2 col-form-label">Number of Pages:</label>
+                    <div class="col-sm-10">
+                        {{ form.pages }}
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Book</button>
+                <a href="{% url 'my_books' %}" class="btn btn-secondary float-right">Back to My Books</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

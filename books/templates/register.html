@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="container shadow">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="register-title">Register</h2>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_username">Username</label>
+                    <input type="text" class="form-control" id="id_username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_first_name">First Name</label>
+                    <input type="text" class="form-control" id="id_first_name" name="first_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_last_name">Last Name</label>
+                    <input type="text" class="form-control" id="id_last_name" name="last_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_email">Email</label>
+                    <input type="email" class="form-control" id="id_email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_password1">Password</label>
+                    <input type="password" class="form-control" id="id_password1" name="password1" required>
+                </div>
+                <div class="form-group">
+                    <label for="id_password2">Confirm Password</label>
+                    <input type="password" class="form-control" id="id_password2" name="password2" required>
+                </div>
+                <ul id="password-strength">
+                    <li id="uppercase" class="invalid">At least one uppercase letter (A-Z)</li>
+                    <li id="lowercase" class="invalid">At least one lowercase letter (a-z)</li>
+                    <li id="number" class="invalid">At least one numeric character (0-9)</li>
+                    <li id="special" class="invalid">At least one special character: ~`!@#$%^&*()-_+={}[]|\;:"<>,./?</li>
+                    <li id="length" class="invalid">At least 10 characters long</li>
+                    <li id="middle" class="invalid">At least one uppercase, numeric, and special character embedded in the middle</li>
+                </ul>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Container styling */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    padding: 40px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYZpWQ7mlvxUuVJrB0C-UBxKLnTHVSTVO22A&s');
+    background-size: cover; /* Slightly transparent background */
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px); /* Blur effect for container */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+}
+
+.container:hover {
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+    transform: scale(1.02); /* Slightly increase size on hover */
+}
+
+.register-title {
+    margin-bottom: 30px;
+    color: #333333;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.register-title:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #555555;
+    margin-bottom: 5px;
+    font-family: 'Arial', sans-serif;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s ease; /* Smooth border color transition */
+}
+
+.form-group input:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #ffffff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transitions */
+    font-family: 'Arial', sans-serif;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Slightly increase size on hover */
+}
+
+/* Password strength indicator styles */
+#password-strength {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#password-strength li {
+    color: #dc3545; /* Invalid criteria color */
+    font-size: 14px;
+    display: none; /* Hide initially */
+}
+
+#password-strength li.valid {
+    color: #28a745; /* Valid criteria color */
+}
+
+#password-strength li.invalid {
+    display: block; /* Show invalid criteria */
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const password1 = document.getElementById('id_password1');
+    const password2 = document.getElementById('id_password2');
+    const strengthIndicators = {
+        uppercase: document.getElementById('uppercase'),
+        lowercase: document.getElementById('lowercase'),
+        number: document.getElementById('number'),
+        special: document.getElementById('special'),
+        length: document.getElementById('length'),
+        middle: document.getElementById('middle')
+    };
+
+    password1.addEventListener('input', function () {
+        const value = password1.value;
+        strengthIndicators.uppercase.classList.toggle('valid', /[A-Z]/.test(value));
+        strengthIndicators.uppercase.classList.toggle('invalid', !/[A-Z]/.test(value));
+
+        strengthIndicators.lowercase.classList.toggle('valid', /[a-z]/.test(value));
+        strengthIndicators.lowercase.classList.toggle('invalid', !/[a-z]/.test(value));
+
+        strengthIndicators.number.classList.toggle('valid', /[0-9]/.test(value));
+        strengthIndicators.number.classList.toggle('invalid', !/[0-9]/.test(value));
+
+        strengthIndicators.special.classList.toggle('valid', /[~`!@#$%^&*()\-_+={}[\]|\;:"<>,./?]/.test(value));
+        strengthIndicators.special.classList.toggle('invalid', !/[~`!@#$%^&*()\-_+={}[\]|\;:"<>,./?]/.test(value));
+
+        strengthIndicators.length.classList.toggle('valid', value.length >= 10);
+        strengthIndicators.length.classList.toggle('invalid', value.length < 10);
+
+        const hasMiddle = /[A-Z]/.test(value.slice(1, -1)) && /[0-9]/.test(value.slice(1, -1)) && /[~`!@#$%^&*()\-_+={}[\]|\;:"<>,./?]/.test(value.slice(1, -1));
+        strengthIndicators.middle.classList.toggle('valid', hasMiddle);
+        strengthIndicators.middle.classList.toggle('invalid', !hasMiddle);
+    });
+
+    password2.addEventListener('input', function () {
+        password2.setCustomValidity(password1.value !== password2.value ? "Passwords do not match" : "");
+    });
+});
+</script>
+
+{% endblock %}
